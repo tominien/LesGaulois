@@ -24,7 +24,12 @@ public class Gaulois {
 
 	public void frapper(Romain romain) {
 		System.out.println(nom + " envoie un grand coup dans la mâchoire de " + romain.getNom());
-		romain.recevoirCoup(force / 3);
+		romain.recevoirCoup((force / 3) * effetPotion);
+	}
+
+	public void boirePotion(int forcePotion) {
+		effetPotion = forcePotion;
+		parler("Merci Druide, je sens que ma force est " + forcePotion + " fois décuplée.");
 	}
 
 	@Override
@@ -33,8 +38,10 @@ public class Gaulois {
 	}
 
 	public static void main(String[] args) {
-		// Création du gaulois
+		// Création du gaulois, du druide et du romain
 		Gaulois asterix = new Gaulois("Astérix", 8);
+		Druide panoramix = new Druide("Panoramix", 5, 10);
+		Romain minus = new Romain("Minus", 6);
 
 		// Affichage du nom
 		System.out.println(asterix.getNom());
@@ -43,7 +50,9 @@ public class Gaulois {
 		// Test des diférentes fonctions de la classe
 		System.out.println(asterix.prendreParole());
 		asterix.parler("Je suis " + asterix.getNom() + " !");
-		// Dernière méthode non-testable car nous n'avons pas encore d'objet "Romain"
+		asterix.frapper(minus);
+		asterix.boirePotion(panoramix.preparerPotion());
+		asterix.frapper(minus);
 
 	}
 }
