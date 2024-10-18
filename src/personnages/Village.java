@@ -1,7 +1,7 @@
 package personnages;
 
 public class Village {
-	public String nom;
+	private String nom;
 	private Chef chef;
 	private int nbVillagois = 0;
 	private int nbVillagoisMaximum;
@@ -13,12 +13,12 @@ public class Village {
 		this.villagois = new Gaulois[nbVillagoisMaximum];
 	}
 
-	public void setChef(Chef chef) {
-		this.chef = chef;
-	}
-
 	public String getNom() {
 		return nom;
+	}
+
+	public void setChef(Chef chef) {
+		this.chef = chef;
 	}
 
 	public void ajouterHabitant(Gaulois villagois) {
@@ -29,37 +29,43 @@ public class Village {
 	}
 
 	public Gaulois trouverHabitant(int indice) {
-		// On suppose que l'indce donné est strictement inférieur à la variable
-		// nbVillagois. Sinon, nous obtiendrons une erreur.
-		return this.villagois[indice];
+		if (indice >= nbVillagois) {
+			throw new IllegalArgumentException("Unexpected value: L'indice du villagois dans le village " + getNom()
+					+ " est supérieur au nombre d'habitants.");
+		}
+
+		return villagois[indice];
 	}
 
 	public void afficherVillagois() {
 		System.out.println("Dans le village du chef " + chef.getNom() + " vivent les légendaires gaulois :");
-		for (int i = 0; i<nbVillagois; i++) {
-			System.out.println("- " + this.villagois[i].getNom());
+		for (int i = 0; i < nbVillagois; i++) {
+			System.out.println("- " + villagois[i].getNom());
 		}
 	}
 
 	public static void main(String[] args) {
-		Village village = new Village("Village des Irréductibles", 30);
-//		Gaulois gaulois = village.trouverHabitant(30);
-		// Nous obtenons une erreur cas nous essayons d'accéder à un gaulois qui n'a pas
-		// encore été créé.
-		Chef abraracourcix = new Chef("Abraracourcix", 6, village);
-		village.setChef(abraracourcix);
+		// Main permettant de tester la classe "Village".
+		// Il correspond à la partie 2 de l'exercice 1 du TP n°2.
 
-		Gaulois asterix = new Gaulois("Astérix", 8);
+		Village village = new Village("Village des Irréductibles", 30);
+
+//		Gaulois gaulois = village.trouverHabitant(30);
+		// Génère une erreur car on essaye d'accéder à un gaulois pas encore ajouté.
+
+		Chef abraracourcix = new Chef("Abraracourcix", 6, village);
+		Gaulois asterix = new Gaulois("Astérix", 8, 0);
+
+		village.setChef(abraracourcix);
 		village.ajouterHabitant(asterix);
 
 //		Gaulois gaulois = village.trouverHabitant(0);
 //		System.out.println(gaulois);
-		// Nous Obtenons le gaulois AStérix (si on met l'indice 0) et une erreur si on
-		// met l'indice 1.
-		
-		Gaulois obelix = new Gaulois("Obélix", 25);
+		// On obtient Astérix si on met indice à 0 et une erreur si on met indice à 1.
+
+		Gaulois obelix = new Gaulois("Obélix", 25, 0);
 		village.ajouterHabitant(obelix);
-		
+
 		village.afficherVillagois();
 	}
 }

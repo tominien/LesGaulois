@@ -8,16 +8,6 @@ public class Druide {
 	private int effetPotionMax;
 	private int forcePotion = 1;
 
-	public static void main(String[] args) {
-		// Création de Panoramix
-		Druide panoramix = new Druide("Panoramix", 5, 10);
-
-		// Tester la méthode "preparerPotion()" :
-		for (int i = 0; i < 10; i++) {
-			panoramix.preparerPotion();
-		}
-	}
-
 	public Druide(String nom, int effetPotionMin, int effetPotionMax) {
 		this.nom = nom;
 		this.effetPotionMin = effetPotionMin;
@@ -39,11 +29,11 @@ public class Druide {
 	}
 
 	public void preparerPotion() {
-		// Génération de l'entier aléatoire
+		// Génération de l'entier aléatoire :
 		Random random = new Random();
 		int randomInt = random.nextInt(effetPotionMax - effetPotionMin + 1) + effetPotionMin;
 
-		// Annonce de la force de la potion
+		// Annonce de la force de la potion :
 		if (randomInt >= 7) {
 			parler("J'ai préparé une super potion de force!");
 			parler("La force de ma potion est " + randomInt + ".");
@@ -55,11 +45,24 @@ public class Druide {
 	}
 
 	public void booster(Gaulois gaulois) {
-		if (gaulois.getNom() == "Obélix") {
+		if ("Obélix".equals(gaulois.getNom())) {
 			parler("Non, Obélix !... Tu n'auras pas de potion magique !");
 		} else {
 			preparerPotion();
 			gaulois.boirePotion(forcePotion);
+		}
+	}
+
+	public static void main(String[] args) {
+		// Main permettant de tester la classe "Druide".
+		// Il correspond à la partie b de la question 3 de l'exercice 4 du TP n°1.
+
+		// Création de Panoramix
+		Druide panoramix = new Druide("Panoramix", 5, 10);
+
+		// Tester la méthode "preparerPotion()" :
+		for (int index = 0; index < 10; index++) {
+			panoramix.preparerPotion();
 		}
 	}
 }
